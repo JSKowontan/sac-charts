@@ -266,14 +266,14 @@
         </style>
         <div class="builder-container">
             <div class="row">
-                <input type="checkbox" id="prop_verticalLabel">
-                <label for prop_VerticalLabel>Vertical Labels</label></div>
+                <input type="checkbox" id="prop_verticalLabels">
+                <label for prop_VerticalLabels>Vertical Labels</label></div>
             <div class="row">
-                <input type="checkbox" id="prop_horizontalLabel">
-                <label for="prop_horizontalLabel">Horizontal Labels</label></div>
+                <input type="checkbox" id="prop_horizontalLabels">
+                <label for="prop_horizontalLabels">Horizontal Labels</label></div>
             <div class="row">
-                <input type="checkbox" id="prop_showGrid">
-                <label for="prop_showGrid">Show Gridlines</label></div>
+                <input type="checkbox" id="prop_showGridlines">
+                <label for="prop_showGridlines">Show Gridlines</label></div>
             <div class="row">
                 <input type="checkbox" id="prop_showLegend">
                 <label for="prop_showLegend">Show Legend</label></div>
@@ -313,9 +313,9 @@
         }
 
         set settings(s) {
-            this._shadowRoot.getElementById("prop_verticalLabel").checked = s.verticalLabel;
-            this._shadowRoot.getElementById("prop_horizontalLabel").checked = s.horizontalLabel;
-            this._shadowRoot.getElementById("prop_showGrid").checked = s.showGrid;
+            this._shadowRoot.getElementById("prop_verticalLabels").checked = s.verticalLabels;
+            this._shadowRoot.getElementById("prop_horizontalLabels").checked = s.horizontalLabels;
+            this._shadowRoot.getElementById("prop_showGridlines").checked = s.showGridlines;
             this._shadowRoot.getElementById("prop_showLegend").checked = s.showLegend;
             this._shadowRoot.getElementById("prop_measureName").value = s.measureName;
             this._shadowRoot.getElementById("prop_colorLY").value = s.colorLY;
