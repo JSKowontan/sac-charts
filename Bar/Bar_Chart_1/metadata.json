@@ -1,0 +1,67 @@
+{
+  "id": "com.autodeck.custom.bar.chart",
+  "name": "Custom Bar Chart Widget",
+  "description": "A bar chart with custom tooltip and builder panel configuration",
+  "eula": "autodeck.com",
+  "vendor": "Autodeck",
+  "license": "MIT",
+  "newInstancePrefix": "CustomBarChart",
+  "version": "1.0.0",
+  "icon": "",
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "custom-bar-chart",
+      "url": "chart_widget.js"
+    },
+    {
+      "kind": "builder",
+      "tag": "custom-bar-chart-builder",
+      "url": "chart_widget.js"
+    }
+  ],
+  "properties": {
+    "showAxis": {
+      "type": "boolean",
+      "description": "Show/Hide Axis labels",
+      "default": false
+    },
+    "colorLY": {
+      "type": "string",
+      "description": "Color for LY bars",
+      "default": "#e0e0e0"
+    },
+    "colorCY": {
+      "type": "string",
+      "description": "Color for CY bars",
+      "default": "#6495ed"
+    },
+    "barWidth": {
+      "type": "integer",
+      "description": "Width of bars in pixels",
+      "default": 30
+    },
+    "measureName": {
+      "type": "string",
+      "description": "Name of the measure to display in tooltip",
+      "default": ""
+    }
+  },
+  "methods": {
+    "setChartData": {
+      "description": "Sets the chart data JSON",
+      "parameters": [
+        {
+          "name": "RecordsArray",
+          "type": "Selection[]",
+          "description": "JSON String like [{'year': '2025', 'period': 'JAN', 'indicator': 'LY', 'value': '100', 'currency': 'NGN'}]"
+        }
+      ]
+    }
+  },
+  "events": {
+    "onBarClick": {
+      "description": "Triggered when a bar is clicked"
+    }
+  }
+}
