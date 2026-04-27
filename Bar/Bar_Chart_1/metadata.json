@@ -12,24 +12,33 @@
     {
       "kind": "main",
       "tag": "custom-bar-chart",
-      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@817ce5a2ebd068d70a5c06bb56559c569d581fc7/Bar/Bar_Chart_1/webcomponent.js",
-      "integrity": "sha256-1qCErcLDndtEZEB/ZtJtWJ9PJU1WBW/gDRQfqv+XpVQ=",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@1e1efb9f49067cfd8ab172df5c4c777e8b1a092c/Bar/Bar_Chart_1/webcomponent.js",
+      "integrity": "sha256-P0eAJ5uDsC49MotdY3VL80xMbbnMYWxY4lmvmYQexu0=",
       "ignoreIntegrity": false
     },
     {
       "kind": "builder",
       "tag": "custom-bar-chart-builder",
-      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@817ce5a2ebd068d70a5c06bb56559c569d581fc7/Bar/Bar_Chart_1/webcomponent.js",
-      "integrity": "sha256-1qCErcLDndtEZEB/ZtJtWJ9PJU1WBW/gDRQfqv+XpVQ=",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@1e1efb9f49067cfd8ab172df5c4c777e8b1a092c/Bar/Bar_Chart_1/webcomponent.js",
+      "integrity": "sha256-P0eAJ5uDsC49MotdY3VL80xMbbnMYWxY4lmvmYQexu0=",
       "ignoreIntegrity": false
     }
   ],
   "properties": {
-    "showAxis": {
-      "type": "boolean",
-      "description": "Show/Hide Axis labels",
-      "default": false
+    "showVerticalLabels": { 
+        "type": "boolean",
+        "description": "Show/Hide Vertical Axis labels", 
+        "default": false 
     },
+    "showHorizontalLabels": { 
+        "type": "boolean",
+        "description": "Show/Hide Horizontal Axis labels", 
+        "default": false 
+    },
+    "showGridlines": { 
+        "type": "boolean", 
+        "description": "Show/Hide Gridlines",
+        "default": false },
     "showLegend": { 
         "type": "boolean", 
         "description": "Show/Hide legends for CY and LY",
@@ -62,7 +71,7 @@
         {
           "name": "RecordsArray",
           "type": "Selection[]",
-          "description": "JSON String like [{'year': '2025', 'period': 'JAN', 'indicator': 'LY', 'value': '100', 'currency': 'NGN'}]"
+          "description": "JSON String like [{'year': '2025', 'period': 'JAN', 'indicator': 'LY', 'value': '1234567890', 'currency': 'NGN'}]"
         }
       ]
     }
