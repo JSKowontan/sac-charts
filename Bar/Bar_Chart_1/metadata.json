@@ -1,7 +1,7 @@
 {
   "id": "com.autodeck.custom.bar.chart",
   "name": "Custom Bar Chart Widget",
-  "description": "A bar chart with custom tooltip and builder panel configuration",
+  "description": "A bar chart highlighting current and prior year.",
   "eula": "autodeck.com",
   "vendor": "Autodeck",
   "license": "MIT",
@@ -12,12 +12,16 @@
     {
       "kind": "main",
       "tag": "custom-bar-chart",
-      "url": "chart_widget.js"
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@b4693853f281ce8a0ac53d7b2fbf5a303ecd0eb3/Bar/Bar_Chart_1/webcomponent.js",
+      "integrity": "sha256-KKZZRcLAdEIUByD0Ve7lMk/6QJu4LkFRuvSZrHfPwRo=",
+      "ignoreIntegrity": false
     },
     {
       "kind": "builder",
       "tag": "custom-bar-chart-builder",
-      "url": "chart_widget.js"
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@b4693853f281ce8a0ac53d7b2fbf5a303ecd0eb3/Bar/Bar_Chart_1/webcomponent.js",
+      "integrity": "sha256-KKZZRcLAdEIUByD0Ve7lMk/6QJu4LkFRuvSZrHfPwRo=",
+      "ignoreIntegrity": false
     }
   ],
   "properties": {
