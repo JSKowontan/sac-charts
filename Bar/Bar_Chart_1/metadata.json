@@ -30,6 +30,10 @@
       "description": "Show/Hide Axis labels",
       "default": false
     },
+    "showLegend": { 
+        "type": "boolean", 
+        "description": "Show/Hide legends for CY and LY",
+        "default": true },
     "colorLY": {
       "type": "string",
       "description": "Color for LY bars",
