@@ -6,21 +6,42 @@
             #container { 
                 position: relative; width: 100%; height: 100%; 
                 display: flex; flex-direction: column; box-sizing: border-box;
-                border-bottom: 1px solid #ccc;
+                /*border-bottom: 1px solid #ccc;*/
             }
-            #chart-area { 
-                flex: 1; display: flex; align-items: flex-end; justify-content: flex-start;
-                gap: 8px; padding: 0 10px; position: relative;
+
+            /* Y-Axis Column */
+            #y-axis { width: 45px; position: relative; display: none; }
+            .y-tick { 
+                position: absolute; right: 8px; transform: translateY(50%);
+                font-size: 11px; color: #888; text-align: right; width: 100%;
             }
+
+            #chart-container { flex: 1; position: relative; border-left: 1px solid #ccc; }
+            #grid-layer { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; }
+            .grid-line { position: absolute; left: 0; right: 0; height: 1px; background: #e4e6e9; }
+            .zero-line { background: #7f8c8d; height: 2px; z-index: 2; }
+
+            #bars-layer { 
+                position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+                display: flex; align-items: flex-start; justify-content: flex-start; gap: 8px; padding: 0 10px;
+            }
+
+            .bar-wrapper { height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
+            .bar { 
+                position: absolute; cursor: pointer; transition: border-color 0.1s; 
+                box-sizing: border-box; border: 2px solid transparent; 
+            }
+
             .bar { transition: opacity 0.2s; cursor: pointer; position: relative; }
+            
             .bar:hover { 
-                border-color: #34619d; /* Highlighting the edges */
-                opacity: 0.8; 
+                border-color: #3b76c4; /* Highlighting the edges */ 
             }
             
             #axis-labels { 
                 display: none; height: 30px; align-items: center; 
                 border-top: 1px solid #eee; font-size: 10px; color: #666;
+                height: 25px; align-items: center; font-size: 10px; color: #666;
             }
 
             /* Legend Styles */
@@ -30,10 +51,6 @@
             }
             .legend-item { display: flex; align-items: center; gap: 8px; }
             .legend-box { width: 16px; height: 16px; border-radius: 2px; }
-
-            #axis-labels { 
-                height: 25px; align-items: center; font-size: 10px; color: #666;
-            }
             
             /* Tooltip Styles */
             #tooltip {
@@ -99,6 +116,11 @@
         }
 
         render() {
+            const { showVerticalLabels, showHorizontalLabels, showGridlines, showLegend, barWidth, colorLY, colorCY } = this._props;
+            const yAxis = this._shadowRoot.getElementById("y-axis");
+            const xAxis = this._shadowRoot.getElementById("x-axis");
+            const gridLayer = this._shadowRoot.getElementById("grid-layer");
+            const barsLayer = this._shadowRoot.getElementById("bars-layer");
             const chartArea = this._shadowRoot.getElementById("chart-area");
             const axisArea = this._shadowRoot.getElementById("axis-labels");
             const legendArea = this._shadowRoot.getElementById("legend");
@@ -107,6 +129,12 @@
             chartArea.innerHTML = "";
             axisArea.innerHTML = "";
             legendArea.innerHTML = "";
+            yAxis.innerHTML = xAxis.innerHTML = gridLayer.innerHTML = barsLayer.innerHTML = legend.innerHTML = "";
+            yAxis.style.display = showVerticalLabels ? "block" : "none";
+            xAxis.style.display = showHorizontalLabels ? "flex" : "none";
+            xAxis.style.paddingLeft = showVerticalLabels ? "55px" : "15px";
+
+
             axisArea.style.display = this._props.showAxis ? "flex" : "none";
 
             if (this._data.length === 0) return;
@@ -119,16 +147,57 @@
                 `;
             }
 
-            const maxValue = Math.max(...this._data.map(d => parseFloat(d.value)));
+            // 1. Calculate Bounds (Always include 0)
+            const values = this._data.map(d => parseFloat(d.value));
+            let max = Math.max(0, ...values);
+            let min = Math.min(0, ...values);
+            const range = max - min;
+            const zeroPos = (max / range) * 100; // % from top
 
-            this._data.forEach((d, index) => {
-                // Create Bar
+            // 2. Generate Neat Ticks (Min, 0, Max + Middle)
+            const ticks = Array.from(new Set([max, min, 0, max / 2, min / 2])).sort((a, b) => b - a);
+            
+            ticks.forEach(t => {
+                const pos = ((max - t) / range) * 100;
+                if (showVerticalLabels) {
+                    const tickEl = document.createElement("div");
+                    tickEl.className = "y-tick";
+                    tickEl.style.top = `${pos}%`;
+                    tickEl.innerText = Math.round(t);
+                    yAxis.appendChild(tickEl);
+                }
+                if (showGridlines) {
+                    const line = document.createElement("div");
+                    line.className = `grid-line ${t === 0 ? 'zero-line' : ''}`;
+                    line.style.top = `${pos}%`;
+                    gridLayer.appendChild(line);
+                }
+            });
+
+            // 3. Render Bars
+            this._data.forEach(d => {
+                const val = parseFloat(d.value);
+                const barHeight = (Math.abs(val) / range) * 100;
+                
+                const wrapper = document.createElement("div");
+                wrapper.className = "bar-wrapper";
+                wrapper.style.width = `${barWidth}px`;
+
+                
+            // 4. Create Bar
                 const bar = document.createElement("div");
                 bar.className = "bar";
-                bar.style.width = `${this._props.barWidth}px`;
-                const heightPercent = (parseFloat(d.value) / maxValue) * 90; // scale to 90% height
-                bar.style.height = `${heightPercent}%`;
+                bar.style.width = "100%";
+                bar.style.height = `${barHeight}%`;
                 bar.style.backgroundColor = d.indicator === "LY" ? this._props.colorLY : this._props.colorCY;
+
+    
+            // Position logic: if positive, bottom of bar is zero line. If negative, top is zero line.
+                if (val >= 0) {
+                    bar.style.top = `${zeroPos - barHeight}%`;
+                } else {
+                    bar.style.top = `${zeroPos}%`;
+                }
                 
                 // Tooltip Interaction
                 bar.addEventListener("mouseenter", (e) => this.showTooltip(e, d));
@@ -136,6 +205,8 @@
                 bar.addEventListener("mouseleave", () => tooltip.style.display = "none");
 
                 chartArea.appendChild(bar);
+                wrapper.appendChild(bar);
+                barsLayer.appendChild(wrapper);
 
                 // Create Axis Labels if enabled
                 if (this._props.showAxis) {
@@ -194,10 +265,15 @@
             .checkbox-field { flex-direction: row; align-items: center; gap: 8px; }
         </style>
         <div class="builder-container">
-            <div class="field checkbox-field">
-                <input type="checkbox" id="prop_showAxis">
-                <label for="prop_showAxis">Show Axis Labels</label>
-            </div>
+            <div class="row">
+                <input type="checkbox" id="prop_verticalLabel">
+                <label for prop_VerticalLabel>Vertical Labels</label></div>
+            <div class="row">
+                <input type="checkbox" id="prop_horizontalLabel">
+                <label for="prop_horizontalLabel">Horizontal Labels</label></div>
+            <div class="row">
+                <input type="checkbox" id="prop_showGrid">
+                <label for="prop_showGrid">Show Gridlines</label></div>
             <div class="row">
                 <input type="checkbox" id="prop_showLegend">
                 <label for="prop_showLegend">Show Legend</label></div>
@@ -237,7 +313,9 @@
         }
 
         set settings(s) {
-            this._shadowRoot.getElementById("prop_showAxis").checked = s.showAxis;
+            this._shadowRoot.getElementById("prop_verticalLabel").checked = s.verticalLabel;
+            this._shadowRoot.getElementById("prop_horizontalLabel").checked = s.horizontalLabel;
+            this._shadowRoot.getElementById("prop_showGrid").checked = s.showGrid;
             this._shadowRoot.getElementById("prop_showLegend").checked = s.showLegend;
             this._shadowRoot.getElementById("prop_measureName").value = s.measureName;
             this._shadowRoot.getElementById("prop_colorLY").value = s.colorLY;
