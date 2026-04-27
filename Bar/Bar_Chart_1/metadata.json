@@ -1,11 +1,11 @@
 {
   "id": "com.autodeck.custom.bar.chart",
-  "name": "Custom Bar Chart Widget",
+  "name": "Bar Chart v1.0.0",
   "description": "A bar chart highlighting current and prior year.",
   "eula": "autodeck.com",
   "vendor": "Autodeck",
   "license": "MIT",
-  "newInstancePrefix": "CustomBarChart",
+  "newInstancePrefix": "AutodeckBarChart",
   "version": "1.0.0",
   "icon": "",
   "webcomponents": [
