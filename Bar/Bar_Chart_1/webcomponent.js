@@ -132,18 +132,7 @@
             xAxis.style.display = showHorizontalLabels ? "flex" : "none";
             xAxis.style.paddingLeft = showVerticalLabels ? "55px" : "15px";
 
-
-            axisArea.style.display = this._props.showAxis ? "flex" : "none";
-
             if (this._data.length === 0) return;
-
-            // Render Legend
-            if (this._props.showLegend) {
-                legendArea.innerHTML = `
-                    <div class="legend-item"><div class="legend-box" style="background:${this._props.colorLY}"></div>LY</div>
-                    <div class="legend-item"><div class="legend-box" style="background:${this._props.colorCY}"></div>CY</div>
-                `;
-            }
 
             // 1. Calculate Bounds (Always include 0)
             const values = this._data.map(d => parseFloat(d.value));
@@ -197,7 +186,7 @@
                     bar.style.top = `${zeroPos}%`;
                 }
                 
-                // Tooltip Interaction
+            // Tooltip Interaction
                 bar.addEventListener("mouseenter", (e) => this.showTooltip(e, d));
                 bar.addEventListener("mousemove", (e) => this.moveTooltip(e));
                 bar.addEventListener("mouseleave", () => tooltip.style.display = "none");
@@ -205,15 +194,23 @@
                 wrapper.appendChild(bar);
                 barsLayer.appendChild(wrapper);
 
-                // Create Axis Labels if enabled
-                if (this._props.showAxis) {
+            // Horizontal Labels
+                if (showHorizontalLabels) {
                     const label = document.createElement("div");
-                    label.style.width = `${this._props.barWidth}px`;
+                    label.style.width = `${barWidth}px`;
                     label.style.textAlign = "center";
                     label.innerText = d.period;
-                    axisArea.appendChild(label);
+                    xAxis.appendChild(label);
                 }
             });
+
+            // Render Legend
+            if (this._props.showLegend) {
+                legendArea.innerHTML = `
+                    <div class="legend-item"><div class="legend-box" style="background:${this._props.colorLY}"></div>LY</div>
+                    <div class="legend-item"><div class="legend-box" style="background:${this._props.colorCY}"></div>CY</div>
+                `;
+            }
         }
 
         showTooltip(e, data) {
@@ -263,11 +260,11 @@
         </style>
         <div class="builder-container">
             <div class="row">
-                <input type="checkbox" id="prop_verticalLabels">
-                <label for prop_VerticalLabels>Vertical Labels</label></div>
+                <input type="checkbox" id="prop_showVerticalLabels">
+                <label for prop_showVerticalLabels>Vertical Labels</label></div>
             <div class="row">
-                <input type="checkbox" id="prop_horizontalLabels">
-                <label for="prop_horizontalLabels">Horizontal Labels</label></div>
+                <input type="checkbox" id="prop_showHorizontalLabels">
+                <label for="prop_showHorizontalLabels">Horizontal Labels</label></div>
             <div class="row">
                 <input type="checkbox" id="prop_showGridlines">
                 <label for="prop_showGridlines">Show Gridlines</label></div>
@@ -310,8 +307,8 @@
         }
 
         set settings(s) {
-            this._shadowRoot.getElementById("prop_verticalLabels").checked = s.verticalLabels;
-            this._shadowRoot.getElementById("prop_horizontalLabels").checked = s.horizontalLabels;
+            this._shadowRoot.getElementById("prop_showVerticalLabels").checked = s.showVerticalLabels;
+            this._shadowRoot.getElementById("prop_showHorizontalLabels").checked = s.showHorizontalLabels;
             this._shadowRoot.getElementById("prop_showGridlines").checked = s.showGridlines;
             this._shadowRoot.getElementById("prop_showLegend").checked = s.showLegend;
             this._shadowRoot.getElementById("prop_measureName").value = s.measureName;
