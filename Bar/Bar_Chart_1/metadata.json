@@ -12,15 +12,15 @@
     {
       "kind": "main",
       "tag": "custom-bar-chart",
-      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@bdeb3d281f5440e798253fc692b6feebf4aa7975/Bar/Bar_Chart_1/webcomponent.js",
-      "integrity": "sha256-iNCNP+0O6d5+YNC9BiXq2M0/Jxy38qw6zOMErjo00Gw=",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@17a9b3422cb2400e7faa603ccf4a2c3b6ab0a687/Bar/Bar_Chart_1/webcomponent.js",
+      "integrity": "sha256-snpLOJDA+k5qleOLGcR51bHKMI0pFNhGMx4+RA7jJLM=",
       "ignoreIntegrity": false
     },
     {
       "kind": "builder",
       "tag": "custom-bar-chart-builder",
-      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@bdeb3d281f5440e798253fc692b6feebf4aa7975/Bar/Bar_Chart_1/webcomponent.js",
-      "integrity": "sha256-iNCNP+0O6d5+YNC9BiXq2M0/Jxy38qw6zOMErjo00Gw=",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@17a9b3422cb2400e7faa603ccf4a2c3b6ab0a687/Bar/Bar_Chart_1/webcomponent.js",
+      "integrity": "sha256-snpLOJDA+k5qleOLGcR51bHKMI0pFNhGMx4+RA7jJLM=",
       "ignoreIntegrity": false
     }
   ],
