@@ -7,7 +7,7 @@
   "license": "MIT",
   "newInstancePrefix": "AutodeckBarChart",
   "version": "1.0.0",
-  "icon": "",
+  "icon": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts/Bar/Bar_Chart_1/barChartIcon.png",
   "webcomponents": [
     {
       "kind": "main",
