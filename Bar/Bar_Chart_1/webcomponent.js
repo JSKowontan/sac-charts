@@ -67,8 +67,14 @@
             .tt-data { font-weight: 600; color: #333; text-align: right; margin-left: 20px;}
         </style>
         <div id="container">
-            <div id="chart-area"></div>
-            <div id="axis-labels"></div>
+            <div id="main-layout">
+                <div id="y-axis"></div>
+                <div id="chart-container">
+                    <div id="grid-layer"></div>
+                    <div id="bars-layer"></div>
+                </div>
+            </div>
+            <div id="x-axis"></div>
             <div id="legend"></div>
             <div id="tooltip"></div>
         </div>
