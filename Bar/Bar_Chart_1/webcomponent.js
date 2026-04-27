@@ -121,12 +121,10 @@
             const xAxis = this._shadowRoot.getElementById("x-axis");
             const gridLayer = this._shadowRoot.getElementById("grid-layer");
             const barsLayer = this._shadowRoot.getElementById("bars-layer");
-            const chartArea = this._shadowRoot.getElementById("chart-area");
             const axisArea = this._shadowRoot.getElementById("axis-labels");
             const legendArea = this._shadowRoot.getElementById("legend");
             const tooltip = this._shadowRoot.getElementById("tooltip");
             
-            chartArea.innerHTML = "";
             axisArea.innerHTML = "";
             legendArea.innerHTML = "";
             yAxis.innerHTML = xAxis.innerHTML = gridLayer.innerHTML = barsLayer.innerHTML = legend.innerHTML = "";
@@ -204,7 +202,6 @@
                 bar.addEventListener("mousemove", (e) => this.moveTooltip(e));
                 bar.addEventListener("mouseleave", () => tooltip.style.display = "none");
 
-                chartArea.appendChild(bar);
                 wrapper.appendChild(bar);
                 barsLayer.appendChild(wrapper);
 
