@@ -12,15 +12,15 @@
     {
       "kind": "main",
       "tag": "custom-bar-chart",
-      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@main/Bar/Bar_Chart_1/webcomponent.js",
-      "integrity": "sha256-mcgk9PfK4tMltwOmGXfaXfjPhnBrNWQObhJWEQQhtMA=",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@548323997f091bc7de2ad9c6ac42f3bf3ab3e626/Bar/Bar_Chart_1/webcomponent.js",
+      "integrity": "sha256-KKZZRcLAdEIUByD0Ve7lMk/6QJu4LkFRuvSZrHfPwRo=",
       "ignoreIntegrity": false
     },
     {
       "kind": "builder",
       "tag": "custom-bar-chart-builder",
-      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@main/Bar/Bar_Chart_1/webcomponent.js",
-      "integrity": "sha256-mcgk9PfK4tMltwOmGXfaXfjPhnBrNWQObhJWEQQhtMA=",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@548323997f091bc7de2ad9c6ac42f3bf3ab3e626/Bar/Bar_Chart_1/webcomponent.js",
+      "integrity": "sha256-KKZZRcLAdEIUByD0Ve7lMk/6QJu4LkFRuvSZrHfPwRo=",
       "ignoreIntegrity": false
     }
   ],
