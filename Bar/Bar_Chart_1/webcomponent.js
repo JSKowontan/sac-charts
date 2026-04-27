@@ -13,11 +13,26 @@
                 gap: 8px; padding: 0 10px; position: relative;
             }
             .bar { transition: opacity 0.2s; cursor: pointer; position: relative; }
-            .bar:hover { opacity: 0.8; }
+            .bar:hover { 
+                border-color: #34619d; /* Highlighting the edges */
+                opacity: 0.8; 
+            }
             
             #axis-labels { 
                 display: none; height: 30px; align-items: center; 
                 border-top: 1px solid #eee; font-size: 10px; color: #666;
+            }
+
+            /* Legend Styles */
+            #legend {
+                display: flex; justify-content: center; gap: 20px;
+                padding: 15px 0; font-size: 12px; color: #444;
+            }
+            .legend-item { display: flex; align-items: center; gap: 8px; }
+            .legend-box { width: 16px; height: 16px; border-radius: 2px; }
+
+            #axis-labels { 
+                height: 25px; align-items: center; font-size: 10px; color: #666;
             }
             
             /* Tooltip Styles */
@@ -37,6 +52,7 @@
         <div id="container">
             <div id="chart-area"></div>
             <div id="axis-labels"></div>
+            <div id="legend"></div>
             <div id="tooltip"></div>
         </div>
     `;
@@ -48,6 +64,19 @@
             this._shadowRoot.appendChild(template.content.cloneNode(true));
             this._props = {};
             this._data = [];
+        }
+
+         // 1. Dynamic Value Formatter
+        formatValue(val) {
+            const num = parseFloat(val);
+            if (isNaN(num)) return "0.00";
+            
+            const absNum = Math.abs(num);
+            if (absNum >= 1e12) return (num / 1e12).toFixed(2) + " Trillion";
+            if (absNum >= 1e9)  return (num / 1e9).toFixed(2) + " Billion";
+            if (absNum >= 1e6)  return (num / 1e6).toFixed(2) + " Million";
+            if (absNum >= 1e3)  return (num / 1e3).toFixed(2) + " Thousand";
+            return num.toFixed(2);
         }
 
         onCustomWidgetBeforeUpdate(changedProperties) {
@@ -72,13 +101,23 @@
         render() {
             const chartArea = this._shadowRoot.getElementById("chart-area");
             const axisArea = this._shadowRoot.getElementById("axis-labels");
+            const legendArea = this._shadowRoot.getElementById("legend");
             const tooltip = this._shadowRoot.getElementById("tooltip");
             
             chartArea.innerHTML = "";
             axisArea.innerHTML = "";
+            legendArea.innerHTML = "";
             axisArea.style.display = this._props.showAxis ? "flex" : "none";
 
             if (this._data.length === 0) return;
+
+            // Render Legend
+            if (this._props.showLegend) {
+                legendArea.innerHTML = `
+                    <div class="legend-item"><div class="legend-box" style="background:${this._props.colorLY}"></div>LY</div>
+                    <div class="legend-item"><div class="legend-box" style="background:${this._props.colorCY}"></div>CY</div>
+                `;
+            }
 
             const maxValue = Math.max(...this._data.map(d => parseFloat(d.value)));
 
@@ -114,7 +153,7 @@
             tooltip.style.display = "block";
             tooltip.innerHTML = `
                 <div class="tt-measure">${this._props.measureName}</div>
-                <div class="tt-value">${data.currency || ''}${data.value} Billion</div>
+                <div class="tt-value">${data.currency || ''}${this.formatValue(data.value)}</div>
                 <div class="tt-row"><span class="tt-label">Calendar Year</span><span class="tt-data">${data.year}</span></div>
                 <div class="tt-row"><span class="tt-label">Calendar Month</span><span class="tt-data">${data.period}</span></div>
                 <div class="tt-row"><span class="tt-label">Year Indicator</span><span class="tt-data">${data.indicator}</span></div>
@@ -159,6 +198,9 @@
                 <input type="checkbox" id="prop_showAxis">
                 <label for="prop_showAxis">Show Axis Labels</label>
             </div>
+            <div class="row">
+                <input type="checkbox" id="prop_showLegend">
+                <label for="prop_showLegend">Show Legend</label></div>
             <div class="field">
                 <label>Measure Name</label>
                 <input type="text" id="prop_measureName">
@@ -196,6 +238,7 @@
 
         set settings(s) {
             this._shadowRoot.getElementById("prop_showAxis").checked = s.showAxis;
+            this._shadowRoot.getElementById("prop_showLegend").checked = s.showLegend;
             this._shadowRoot.getElementById("prop_measureName").value = s.measureName;
             this._shadowRoot.getElementById("prop_colorLY").value = s.colorLY;
             this._shadowRoot.getElementById("prop_colorCY").value = s.colorCY;
