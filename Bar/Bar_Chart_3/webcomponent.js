@@ -13,14 +13,12 @@
             }
             #main-layout { display: flex; flex: 1; position: relative; overflow: visible; }
             
-            /* Vertical Axis labels - No axis line */
             #y-axis { width: 50px; position: relative; display: none; flex-shrink: 0; }
             .y-label { 
                 position: absolute; right: 8px; transform: translateY(-50%);
                 font-size: 11px; color: #666; white-space: nowrap;
             }
 
-            /* Chart Area */
             #chart-area { flex: 1; position: relative; overflow: visible; }
             #grid-layer { position: absolute; inset: 0; pointer-events: none; }
             .grid-line { position: absolute; left: 0; right: 0; height: 1px; background: #e4e6e9; }
@@ -37,23 +35,29 @@
             }
             .bar:hover { filter: brightness(0.9); border-color: rgba(0,0,0,0.1); }
 
-            /* Horizontal Axis labels */
             #x-axis { height: 25px; display: none; align-items: center; gap: 8px; font-size: 10px; color: #666; margin-top: 4px; }
             .x-label { text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-            /* Legend */
             #legend { height: 35px; display: none; justify-content: center; align-items: center; gap: 20px; font-size: 12px; color: #444; }
             .legend-item { display: flex; align-items: center; gap: 6px; }
             .legend-box { width: 12px; height: 12px; }
 
-            /* Tooltip */
+            /* Tooltip: Fixed position ensures it sits on top of all bars and can overflow widget bounds */
             #tooltip {
-                position: fixed; display: none; background: white; border: 1px solid #c8ced5;
-                border-radius: 6px; padding: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-                z-index: 10000; pointer-events: none; min-width: 190px; line-height: 1.4;
+                position: fixed; 
+                display: none; 
+                background: white; 
+                border: 1px solid #c8ced5;
+                border-radius: 6px; 
+                padding: 14px; 
+                box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                z-index: 2147483647; /* Highest possible z-index to stay on top */
+                pointer-events: none; 
+                min-width: 200px; 
+                line-height: 1.4;
             }
             .tt-measure { color: #5c6d82; font-size: 12px; margin-bottom: 2px; }
-            .tt-value { font-size: 17px; font-weight: bold; color: #1c2d42; border-bottom: 1px solid #ebedf0; padding-bottom: 8px; margin-bottom: 8px; }
+            .tt-value { font-size: 18px; font-weight: bold; color: #1c2d42; border-bottom: 1px solid #ebedf0; padding-bottom: 8px; margin-bottom: 8px; }
             .tt-row { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
             .tt-data { font-weight: bold; text-align: right; margin-left: 15px; }
         </style>
@@ -80,11 +84,10 @@
             this._data = [];
         }
 
-        // --- Value Formatter ---
         formatValue(val, isAxis = false) {
             const num = parseFloat(val);
             const absNum = Math.abs(num);
-            let suffix = isAxis ? "" : "";
+            let suffix = "";
             let divider = 1;
 
             if (absNum >= 1e12) { divider = 1e12; suffix = isAxis ? "T" : " Trillion"; }
@@ -102,8 +105,7 @@
         }
 
         setChartData(data) {
-            // Incomplete data check
-            if (!data || data.length === 0 || !data[0].value) {
+            if (!data || data.length === 0 || data[0].value === undefined) {
                 this._data = [];
             } else {
                 this._data = data;
@@ -127,20 +129,14 @@
 
             if (this._data.length === 0) return;
 
-            // 1. Calculate Bipolar Scale
             const vals = this._data.map(d => parseFloat(d.value));
             const maxVal = Math.max(0, ...vals);
             const minVal = Math.min(0, ...vals);
-            const dataRange = maxVal - minVal;
-            const zeroPosPct = (maxVal / dataRange) * 100; // From top
+            const dataRange = (maxVal - minVal) || 1;
+            const zeroPosPct = (maxVal / dataRange) * 100;
 
-            // 2. Vertical Axis & Gridlines
-            const ticks = [maxVal, 0, minVal]; 
-            // Add midpoints if range is large for "neat presentation"
-            if (maxVal > 0 && Math.abs(maxVal) > dataRange * 0.2) ticks.push(maxVal / 2);
-            if (minVal < 0 && Math.abs(minVal) > dataRange * 0.2) ticks.push(minVal / 2);
-
-            [...new Set(ticks)].forEach(t => {
+            const ticks = [...new Set([maxVal, 0, minVal, maxVal/2, minVal/2])].sort((a,b) => b-a);
+            ticks.forEach(t => {
                 const pos = ((maxVal - t) / dataRange) * 100;
                 if (showVerticalAxis) {
                     const lbl = document.createElement("div");
@@ -157,7 +153,6 @@
                 }
             });
 
-            // 3. Bars and Horizontal labels
             xAxis.style.paddingLeft = showVerticalAxis ? "50px" : "10px";
 
             this._data.forEach(d => {
@@ -173,14 +168,8 @@
                 bar.style.width = "100%";
                 bar.style.height = `${heightPct}%`;
                 bar.style.backgroundColor = d.indicator === "LY" ? colorLY : colorCY;
-                
-                if (val >= 0) {
-                    bar.style.top = `${zeroPosPct - heightPct}%`;
-                } else {
-                    bar.style.top = `${zeroPosPct}%`;
-                }
+                bar.style.top = val >= 0 ? `${zeroPosPct - heightPct}%` : `${zeroPosPct}%`;
 
-                // Tooltip events
                 bar.onmouseenter = (e) => {
                     tooltip.style.display = "block";
                     tooltip.innerHTML = `
@@ -191,18 +180,32 @@
                         <div class="tt-row"><span>Year Indicator</span><span class="tt-data">${d.indicator}</span></div>
                     `;
                 };
+
                 bar.onmousemove = (e) => {
                     const ttRect = tooltip.getBoundingClientRect();
+                    const winW = window.innerWidth;
+                    const winH = window.innerHeight;
+
+                    // Calculate initial pos: 15px offset from cursor
                     let x = e.clientX + 15;
                     let y = e.clientY - ttRect.height - 15;
 
-                    // Bounds check (Window)
-                    if (x + ttRect.width > window.innerWidth) x = e.clientX - ttRect.width - 15;
-                    if (y < 0) y = e.clientY + 15;
+                    // Boundary detection: Ensure tooltip shows completely outside chart area if needed
+                    if (x + ttRect.width > winW) {
+                        x = e.clientX - ttRect.width - 15; // Flip to left of cursor
+                    }
+                    if (y < 0) {
+                        y = e.clientY + 15; // Flip below cursor if hitting top
+                    }
+                    // Final check for bottom overflow
+                    if (y + ttRect.height > winH) {
+                        y = winH - ttRect.height - 10;
+                    }
 
                     tooltip.style.left = `${x}px`;
                     tooltip.style.top = `${y}px`;
                 };
+
                 bar.onmouseleave = () => tooltip.style.display = "none";
 
                 slot.appendChild(bar);
@@ -217,7 +220,6 @@
                 }
             });
 
-            // 4. Legend
             if (showLegend) {
                 legend.innerHTML = `
                     <div class="legend-item"><div class="legend-box" style="background:${colorLY}"></div>LY</div>
@@ -228,7 +230,6 @@
     }
     customElements.define("custom-bar-chart", CustomBarChart);
 
-    // --- Builder Panel ---
     class Builder extends HTMLElement {
         constructor() {
             super();
