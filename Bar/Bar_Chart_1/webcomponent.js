@@ -133,7 +133,7 @@
             
             axisArea.innerHTML = "";
             legendArea.innerHTML = "";
-            yAxis.innerHTML = xAxis.innerHTML = gridLayer.innerHTML = barsLayer.innerHTML = legend.innerHTML = "";
+            yAxis.innerHTML = xAxis.innerHTML = gridLayer.innerHTML = barsLayer.innerHTML = legendArea.innerHTML = "";
             yAxis.style.display = showVerticalLabels ? "block" : "none";
             xAxis.style.display = showHorizontalLabels ? "flex" : "none";
             xAxis.style.paddingLeft = showVerticalLabels ? "55px" : "15px";
