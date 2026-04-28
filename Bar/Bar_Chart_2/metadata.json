@@ -44,5 +44,10 @@
         }
       ]
     }
+  },
+  "events": {
+    "onBarClick": {
+      "description": "Triggered when a bar is clicked"
+    }
   }
 }
