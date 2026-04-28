@@ -1,8 +1,12 @@
 {
   "name": "Pro Bar Chart",
   "description": "Vanilla JS Bar Chart with Bipolar Axis and Dynamic Tooltips",
+  "newInstancePrefix": "CustomBar",
   "id": "com.custom.barchart.pro",
   "version": "1.0.0",
+  "vendor": "Custom",
+  "eula": "",
+  "license": "",
   "webcomponents": [
     {
       "kind": "main",
