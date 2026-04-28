@@ -1,0 +1,48 @@
+{
+  "name": "Lightweight Bar Chart",
+  "description": "Vanilla JS Bar Chart with negative value support, dynamic formatting, and togglable axis.",
+  "newInstancePrefix": "CustomBar",
+  "id": "com.sap.sample.vanilla.barchart",
+  "version": "1.0.0",
+  "vendor": "Custom",
+  "eula": "",
+  "license": "",
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "custom-bar-chart",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@8f684d1773e6f5c5ca9e81c91a4a38a47db8e76f/Bar/Bar_Chart_2/webcomponent.js",
+      "integrity": "sha256-BrgblUzRP1eUUsTgPckjxuAiwdSXdby6mI3cuQ1h7/8=",
+      "ignoreIntegrity": false
+    },
+    {
+      "kind": "builder",
+      "tag": "custom-bar-chart-builder",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@8f684d1773e6f5c5ca9e81c91a4a38a47db8e76f/Bar/Bar_Chart_2/webcomponent.js",
+      "integrity": "sha256-BrgblUzRP1eUUsTgPckjxuAiwdSXdby6mI3cuQ1h7/8=",
+      "ignoreIntegrity": false
+    }
+  ],
+  "properties": {
+    "showVerticalAxis": { "type": "boolean", "default": false },
+    "showHorizontalAxis": { "type": "boolean", "default": false },
+    "showLegend": { "type": "boolean", "default": true },
+    "showGridlines": { "type": "boolean", "default": false },
+    "colorLY": { "type": "string", "default": "#e2e5e9" },
+    "colorCY": { "type": "string", "default": "#5c90cf" },
+    "barWidth": { "type": "integer", "default": 32 },
+    "measureName": { "type": "string", "default": "Net Revenue" }
+  },
+  "methods": {
+    "setChartData": {
+      "description": "Sets the chart data JSON",
+      "parameters": [
+        {
+          "name": "RecordsArray",
+          "type": "Selection[]",
+          "description": "JSON String like [{'year': '2025', 'period': 'JAN', 'indicator': 'LY', 'value': '100', 'currency': 'NGN'}]"
+        }
+      ]
+    }
+  }
+}
