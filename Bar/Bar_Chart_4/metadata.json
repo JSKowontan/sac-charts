@@ -1,0 +1,54 @@
+{
+  "name": "Overlapping Bar Chart",
+  "description": "Vanilla JS Bar Chart with overlapping CY/LY bars.",
+  "id": "com.autodeck.barchart.overlapping",
+  "eula": "autodeck.com",
+  "vendor": "Autodeck",
+  "license": "MIT",
+  "newInstancePrefix": "AutodeckBarChart",
+  "version": "1.0.0",
+  "icon": "",
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "custom-bar-chart",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@87196177e15fb78c676eed9cfdc8a3d480abd42a/Bar/Bar_Chart_4/webcomponent.js",
+      "integrity": "sha256-Yn90LetsEnOP5Xf0EFsclD1SBgBmGrb45WchTE/DLCk=",
+      "ignoreIntegrity": false
+    },
+    {
+      "kind": "builder",
+      "tag": "custom-bar-chart-builder",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@87196177e15fb78c676eed9cfdc8a3d480abd42a/Bar/Bar_Chart_4/webcomponent.js",
+      "integrity": "sha256-Yn90LetsEnOP5Xf0EFsclD1SBgBmGrb45WchTE/DLCk=",
+      "ignoreIntegrity": false
+    }
+  ],
+  "properties": {
+    "showVerticalAxis": { "type": "boolean", "default": false },
+    "showHorizontalAxis": { "type": "boolean", "default": false },
+    "showLegend": { "type": "boolean", "default": false },
+    "showGridlines": { "type": "boolean", "default": false },
+    "colorLY": { "type": "string", "default": "#e2e5e9" },
+    "colorCY": { "type": "string", "default": "#5c90cf" },
+    "barWidth": { "type": "integer", "default": 32 },
+    "measureName": { "type": "string", "default": "Net Revenue" }
+  },
+  "methods": {
+    "setChartData": {
+      "description": "Sets the chart data JSON",
+      "parameters": [
+        {
+          "name": "RecordsArray",
+          "type": "Selection[]",
+          "description": "JSON String like [{'year': '2025', 'period': 'JAN', 'indicator': 'LY', 'value': '100', 'currency': 'NGN'}]"
+        }
+      ]
+    }
+  },
+  "events": {
+    "onBarClick": {
+      "description": "Triggered when a bar is clicked"
+    }
+  }
+}
