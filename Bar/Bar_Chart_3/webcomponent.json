@@ -1,0 +1,44 @@
+{
+  "name": "Pro Bar Chart",
+  "description": "Vanilla JS Bar Chart with Bipolar Axis and Dynamic Tooltips",
+  "id": "com.custom.barchart.pro",
+  "version": "1.0.0",
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "custom-bar-chart",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@a8afdcad928eb6ecb48531cdfdcd592103af5404/Bar/Bar_Chart_3/webcomponent.js",
+      "integrity": "sha256-eW4XA5S3RP9DO+XmdXnC6yBOeFZrGFC1X8JjGP+tCro=",
+      "ignoreIntegrity": false
+    },
+    {
+      "kind": "builder",
+      "tag": "custom-bar-chart-builder",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@a8afdcad928eb6ecb48531cdfdcd592103af5404/Bar/Bar_Chart_3/webcomponent.js",
+      "integrity": "sha256-eW4XA5S3RP9DO+XmdXnC6yBOeFZrGFC1X8JjGP+tCro=",
+      "ignoreIntegrity": false
+    }
+  ],
+  "properties": {
+    "showVerticalAxis": { "type": "boolean", "default": false },
+    "showHorizontalAxis": { "type": "boolean", "default": false },
+    "showLegend": { "type": "boolean", "default": false },
+    "showGridlines": { "type": "boolean", "default": false },
+    "colorLY": { "type": "string", "default": "#e2e5e9" },
+    "colorCY": { "type": "string", "default": "#5c90cf" },
+    "barWidth": { "type": "integer", "default": 32 },
+    "measureName": { "type": "string", "default": "Net Revenue" }
+  },
+  "methods": {
+    "setChartData": {
+      "parameters": [
+        { "name": "RecordsArray", "type": "Selection[]" }
+      ]
+    }
+  },
+  "events": {
+    "onBarClick": {
+      "description": "Triggered when a bar is clicked"
+    }
+  }
+}
