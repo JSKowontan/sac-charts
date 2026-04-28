@@ -37,12 +37,6 @@
             .bar:hover { 
                 border-color: #3b76c4; /* Highlighting the edges */ 
             }
-            
-            #axis-labels { 
-                display: none; height: 30px; align-items: center; 
-                border-top: 1px solid #eee; font-size: 10px; color: #666;
-                height: 25px; align-items: center; font-size: 10px; color: #666;
-            }
 
             /* Legend Styles */
             #legend {
@@ -127,12 +121,9 @@
             const xAxis = this._shadowRoot.getElementById("x-axis");
             const gridLayer = this._shadowRoot.getElementById("grid-layer");
             const barsLayer = this._shadowRoot.getElementById("bars-layer");
-            const axisArea = this._shadowRoot.getElementById("axis-labels");
             const legendArea = this._shadowRoot.getElementById("legend");
             const tooltip = this._shadowRoot.getElementById("tooltip");
             
-            axisArea.innerHTML = "";
-            legendArea.innerHTML = "";
             yAxis.innerHTML = xAxis.innerHTML = gridLayer.innerHTML = barsLayer.innerHTML = legendArea.innerHTML = "";
             yAxis.style.display = showVerticalLabels ? "block" : "none";
             xAxis.style.display = showHorizontalLabels ? "flex" : "none";
