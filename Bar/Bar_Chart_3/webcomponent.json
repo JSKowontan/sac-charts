@@ -11,15 +11,15 @@
     {
       "kind": "main",
       "tag": "custom-bar-chart",
-      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@a8afdcad928eb6ecb48531cdfdcd592103af5404/Bar/Bar_Chart_3/webcomponent.js",
-      "integrity": "sha256-eW4XA5S3RP9DO+XmdXnC6yBOeFZrGFC1X8JjGP+tCro=",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@98d760d1d3dfb282fb9813a02e3aa7b3826222f2/Bar/Bar_Chart_3/webcomponent.js",
+      "integrity": "sha256-1nReJ9nxhEm2U8HZbfjAN3knSaRsR/dxhol4tVWT12E=",
       "ignoreIntegrity": false
     },
     {
       "kind": "builder",
       "tag": "custom-bar-chart-builder",
-      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@a8afdcad928eb6ecb48531cdfdcd592103af5404/Bar/Bar_Chart_3/webcomponent.js",
-      "integrity": "sha256-eW4XA5S3RP9DO+XmdXnC6yBOeFZrGFC1X8JjGP+tCro=",
+      "url": "https://cdn.jsdelivr.net/gh/JSKowontan/sac-charts@98d760d1d3dfb282fb9813a02e3aa7b3826222f2/Bar/Bar_Chart_3/webcomponent.js",
+      "integrity": "sha256-1nReJ9nxhEm2U8HZbfjAN3knSaRsR/dxhol4tVWT12E=",
       "ignoreIntegrity": false
     }
   ],
